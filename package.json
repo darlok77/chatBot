@@ -1,0 +1,24 @@
+{
+  "name": "chatbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/darlok77/chatBot.git"
+  },
+  "author": "Guillaume DALLEAU",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/darlok77/chatBot/issues"
+  },
+  "homepage": "https://github.com/darlok77/chatBot#readme",
+  "dependencies": {
+    "ent": "^2.2.0",
+    "express": "^4.16.2",
+    "socket.io": "^2.0.4"
+  }
+}
