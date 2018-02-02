@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint ./public/* ./routes/* ./app.js",
+    "start": "eslint ./public/index.js ./app.js && browserify index.js -o bundle.js && node app"
   },
   "repository": {
     "type": "git",
@@ -16,9 +17,12 @@
     "url": "https://github.com/darlok77/chatBot/issues"
   },
   "homepage": "https://github.com/darlok77/chatBot#readme",
+  "devDependencies": {
+    "browserify": "^15.2.0",
+    "eslint": "^4.16.0"
+  },
   "dependencies": {
-    "ent": "^2.2.0",
-    "express": "^4.16.2",
+    "express": "^4.10.2",
     "socket.io": "^2.0.4"
   }
 }
