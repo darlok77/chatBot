@@ -6407,6 +6407,7 @@ class Chat {
 
       elZoneChat.appendChild(elNewP);
       elNewP.appendChild(content);
+      //document.body.insert(elNewP, elZoneChat);
     });
 
     elMessage.addEventListener ('keypress', (e) => {
@@ -6416,7 +6417,7 @@ class Chat {
         socket.emit('message', message); // Transmet le msg aux autres
         insereMessage(pseudo, message); // Affiche le msg aussi sur notre page
         elMessage.value = ''; // Vide la zone
-        elMessage.focus(); // remet le focus dessus
+        elMessage.value.focus(); // remet le focus dessus
       }
     });
 
@@ -6430,6 +6431,7 @@ class Chat {
       elNewP.appendChild(elNewB);
       elNewB.appendChild(msgPseudo);
       elNewP.appendChild(msgContent);
+      document.body.insert(elNewP, elZoneChat);
     }
   }
 }

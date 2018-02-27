@@ -18,9 +18,16 @@ io.sockets.on('connection', socket => {
     socket.broadcast.emit('nouveau_client', pseudo);
   });
 
+
+
   // Dès qu'on reçoit un message, on récupère le pseudo de son auteur et on le transmet aux autres personnes
   socket.on('message', message => {
-    socket.broadcast.emit('message', {'pseudo': socket.pseudo, 'message': message});
+    if (message.indexOf("/youtube")!= -1){
+      socket.emit('messageytb', {'pseudo': socket.pseudo, 'message': message});
+    }
+    else{
+      socket.broadcast.emit('message', {'pseudo': socket.pseudo, 'message': message});
+    }
   });
 });
 

@@ -26,14 +26,19 @@ class Chat {
       insereMessage(data.pseudo, data.message);
     });
 
+    // Quand on reçoit un message avec /youtube, on l'insère dans la page
+    socket.on('messageytb', (data) => {
+      insereMessage(pseudo, "a demandé youtube");
+    });
+
     // Quand un nouveau client se connecte, on affiche l'information
     socket.on('nouveau_client', (pseudo)=> {
       const content = document.createTextNode(pseudo + ' a rejoint le Chat !');
-      const elNewP = document.createElement('div');
+      const elNewP = document.createElement('p');
 
       elZoneChat.appendChild(elNewP);
       elNewP.appendChild(content);
-      //document.body.insert(elNewP, elZoneChat);
+      elZoneChat.scrollTop = elZoneChat.scrollHeight;
     });
 
     elMessage.addEventListener ('keypress', (e) => {
@@ -43,7 +48,7 @@ class Chat {
         socket.emit('message', message); // Transmet le msg aux autres
         insereMessage(pseudo, message); // Affiche le msg aussi sur notre page
         elMessage.value = ''; // Vide la zone
-        elMessage.value.focus(); // remet le focus dessus
+        elMessage.focus(); // remet le focus dessus
       }
     });
 
@@ -57,7 +62,7 @@ class Chat {
       elNewP.appendChild(elNewB);
       elNewB.appendChild(msgPseudo);
       elNewP.appendChild(msgContent);
-      document.body.insert(elNewP, elZoneChat);
+      elZoneChat.scrollTop = elZoneChat.scrollHeight;
     }
   }
 }
