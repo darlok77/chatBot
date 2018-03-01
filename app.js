@@ -3,6 +3,7 @@ const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io').listen(server);
 const path = require('path');
+const http = require('http');
 
 app.use ('/', express.static(path.join(`${__dirname}/public`)));
 
@@ -24,8 +25,31 @@ io.sockets.on('connection', socket => {
   });
 
   socket.on('messageytb', message => {
-    socket.emit('messageytb', {'pseudo': socket.pseudo, 'message': message + ' ytb'});
+
+    const response = callApi('MTC-S3RL');
+    socket.emit('messageytb', {'pseudo': socket.pseudo, 'message': response});
   });
 });
 
+
+const callApi = name =>{
+
+
+  const options = {
+    host: 'https://www.googleapis.com/youtube/v3',
+    port: 80,
+    path: '/search?part=snippet&q='+name+'&key=AIzaSyBzhXQGlpp20V71dGCT_67REdUlWe-Gpog',
+    method: 'Get'
+  };
+
+ http.request(options, function(res) {
+  console.log('STATUS: ' + res.statusCode);
+  console.log('HEADERS: ' + JSON.stringify(res.headers));
+  res.setEncoding('utf8');
+  res.on('data', function (chunk) {
+    console.log('BODY: ' + chunk);
+  });
+}).end();
+
+}
 server.listen(8080);

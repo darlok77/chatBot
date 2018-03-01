@@ -6402,7 +6402,7 @@ class Chat {
 
     // Quand on reçoit un message avec /youtube, on l'insère dans la page
     socket.on('messageytb', (data) => {
-      insereMessage(data.pseudo, 'a demandé youtube');
+      insereMessage(data.pseudo, data.message);
     });
 
     // Quand un nouveau client se connecte, on affiche l'information
