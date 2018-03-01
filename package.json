@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint ./public/* ./routes/* ./app.js",
-    "start": "eslint ./public/index.js ./app.js && browserify public/index.js -o bundle.js && node app"
+    "start": "browserify public/index.js -o public/bundle.js && node app"
   },
   "repository": {
     "type": "git",

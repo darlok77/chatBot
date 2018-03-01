@@ -28,7 +28,7 @@ class Chat {
 
     // Quand on reçoit un message avec /youtube, on l'insère dans la page
     socket.on('messageytb', (data) => {
-      insereMessage(pseudo, "a demandé youtube");
+      insereMessage(data.pseudo, 'a demandé youtube');
     });
 
     // Quand un nouveau client se connecte, on affiche l'information
@@ -45,7 +45,12 @@ class Chat {
       if (e.keyCode === 13) {
         let message = elMessage.value;
 
-        socket.emit('message', message); // Transmet le msg aux autres
+        if (message.indexOf("/youtube")!= -1){
+          socket.emit('messageytb', message);
+        }
+        else{
+          socket.emit('message', message); // Transmet le msg aux autres
+        }
         insereMessage(pseudo, message); // Affiche le msg aussi sur notre page
         elMessage.value = ''; // Vide la zone
         elMessage.focus(); // remet le focus dessus
