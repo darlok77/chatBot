@@ -60,7 +60,11 @@ class Chat {
         elNewDiv2.appendChild(elNewP);
         elNewDiv2.appendChild(elNewSpan);
 
-        //elNewDiv2.appendChild(content);
+
+      elNewImg.addEventListener('click', (e) => {
+        insereVideo(element.id);
+      });
+
         elNewDiv.appendChild(elNewDiv2);
       });
       elZoneChat.appendChild(elNewDiv);
@@ -118,8 +122,6 @@ class Chat {
 
       elZoneChat.appendChild(elNewIframe);
     }
-
-    //const test=document.querySelectorAll(.thumbnails);
 
   }
 }
