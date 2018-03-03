@@ -1,3 +1,7 @@
 #zone_chat{
 	overflow: auto;
 }
+.descVideo{
+	float:left;
+	margin-right: 5px;
+}

@@ -3,7 +3,7 @@ const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io').listen(server);
 const path = require('path');
-const http = require('http');
+const request = require('request');
 
 app.use ('/', express.static(path.join(`${__dirname}/public`)));
 
@@ -24,32 +24,24 @@ io.sockets.on('connection', socket => {
     socket.broadcast.emit('message', {'pseudo': socket.pseudo, 'message': message + ' Normal'});
   });
 
+  
   socket.on('messageytb', message => {
+  const tabVideos=[];
 
-    const response = callApi('MTC-S3RL');
-    socket.emit('messageytb', {'pseudo': socket.pseudo, 'message': response});
+  request({url: `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${message}&key=AIzaSyBzhXQGlpp20V71dGCT_67REdUlWe-Gpog`, json: true}, function(err, res, json) {
+    if (err) {
+      throw err;
+    }
+    
+    for (let i = 0; i < 3; i++){
+      tabVideos.push({'id': json.items[i].id.videoId , 'title': json.items[i].snippet.title , 'channelTitle': json.items[i].snippet.channelTitle, 'thumbnails': json.items[i].snippet.thumbnails.default.url});
+    }
+    socket.emit('messageytb', {'pseudo': socket.pseudo, 'message': tabVideos});
+
+    });
   });
 });
 
 
-const callApi = name =>{
 
-
-  const options = {
-    host: 'https://www.googleapis.com/youtube/v3',
-    port: 80,
-    path: '/search?part=snippet&q='+name+'&key=AIzaSyBzhXQGlpp20V71dGCT_67REdUlWe-Gpog',
-    method: 'Get'
-  };
-
- http.request(options, function(res) {
-  console.log('STATUS: ' + res.statusCode);
-  console.log('HEADERS: ' + JSON.stringify(res.headers));
-  res.setEncoding('utf8');
-  res.on('data', function (chunk) {
-    console.log('BODY: ' + chunk);
-  });
-}).end();
-
-}
 server.listen(8080);
